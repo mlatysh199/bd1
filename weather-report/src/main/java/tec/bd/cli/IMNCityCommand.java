@@ -2,7 +2,6 @@ package tec.bd.cli;
 
 import picocli.CommandLine;
 import tec.bd.ApplicationContext;
-import tec.bd.weather.WeatherReport;
 
 @CommandLine.Command(name = "imn-city", description = "Get weather forecast by city from the IMN system")
 public class IMNCityCommand implements Runnable{
@@ -14,9 +13,8 @@ public class IMNCityCommand implements Runnable{
 
     @Override
     public void run() {
-        var openWeatherService = APP_CONTEXT.openIMNProvider;
-        var weatherReport = new WeatherReport(openWeatherService);
-        var report = weatherReport.byCity(cityName);
+        var weatherService = APP_CONTEXT.imnService;
+        var report = weatherService.byCity(cityName);
         System.out.println(report.toString());
     }
     

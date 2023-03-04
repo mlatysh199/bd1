@@ -2,7 +2,6 @@ package tec.bd.cli;
 
 import picocli.CommandLine;
 import tec.bd.ApplicationContext;
-import tec.bd.weather.WeatherReport;
 
 @CommandLine.Command(name = "city", description = "Get weather forecast by city")
 public class CityCommand implements Runnable {
@@ -14,9 +13,8 @@ public class CityCommand implements Runnable {
 
     @Override
     public void run() {
-        var openWeatherService = APP_CONTEXT.openWeatherService;
-        var weatherReport = new WeatherReport(openWeatherService);
-        var report = weatherReport.byCity(cityName);
+        var weatherService = APP_CONTEXT.openWeatherService;
+        var report = weatherService.byCity(cityName);
         System.out.println(report.toString());
     }
 

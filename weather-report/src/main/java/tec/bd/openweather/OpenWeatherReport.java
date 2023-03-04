@@ -1,10 +1,11 @@
-package tec.bd.weather.service;
+package tec.bd.openweather;
 
 import com.google.gson.annotations.SerializedName;
 
-import tec.bd.weather.Report;
+import tec.bd.weather.model.Report;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class OpenWeatherReport {
 
@@ -275,8 +276,9 @@ public class OpenWeatherReport {
             report.setHumidity(humidity);
             report.setPressure(pressure);
             report.setTemperature(temp);
-            report.setTemp_min(temp);
-            report.setTemp_max(temp);
+            report.setTempMin(tempMin);
+            report.setTempMax(tempMax);
+            report.setDate(new Date(System.currentTimeMillis()));
             return report;
         }
     }
