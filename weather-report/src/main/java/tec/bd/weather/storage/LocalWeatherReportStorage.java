@@ -35,15 +35,15 @@ public class LocalWeatherReportStorage implements WeatherReportStorage {
     }
 
     @Override
-    public Report update(Report oldReport) {
-        String reportKey = createKey(oldReport.getData(), oldReport.getDate());
-        if (!savedReports.containsKey(reportKey)) return null;
-        return savedReports.get(reportKey);
+    public Report update(Report newReport) {
+        String reportKey = createKey(newReport.getData(), newReport.getDate());
+        Report oldReport = savedReports.get(reportKey);
+        savedReports.put(reportKey, newReport.clone());
+        return oldReport;
     }
 
     @Override
     public Report find(String reportKey) {
-        if (!savedReports.containsKey(reportKey)) return null;
         return savedReports.get(reportKey);
     }
 

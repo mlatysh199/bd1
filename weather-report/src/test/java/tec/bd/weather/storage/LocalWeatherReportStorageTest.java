@@ -56,8 +56,13 @@ public class LocalWeatherReportStorageTest {
         LocalWeatherReportStorage storage = new LocalWeatherReportStorage(false);
         Report report = new Report();
         report.setData("3475982375");
+        report.setHumidity(0);
         storage.save(report);
-        assertThat(storage.update(report)).isNotNull();
+        report = new Report();
+        report.setData("3475982375");
+        report.setHumidity(100);
+        storage.update(report);
+        assertThat(storage.find(storage.createKey(report.getData(), null)).getHumidity() == 100f).isTrue();
     }
 
     @Test
