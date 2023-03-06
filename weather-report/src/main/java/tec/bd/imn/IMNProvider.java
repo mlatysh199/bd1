@@ -1,5 +1,7 @@
 package tec.bd.imn;
 
+import java.util.Date;
+
 import tec.bd.weather.model.Report;
 import tec.bd.weather.model.ReportType;
 import tec.bd.weather.service.WeatherProvider;
@@ -14,6 +16,7 @@ public class IMNProvider implements WeatherProvider {
         report.setTempMin((float)Math.random()*60 - 10);
         report.setType(ReportType.CITY);
         report.setData(city);
+        report.setDate(new Date(System.currentTimeMillis()));
         return report;
     }
 
@@ -25,6 +28,7 @@ public class IMNProvider implements WeatherProvider {
         report.setTempMax((float)Math.random()*60 - 10);
         report.setTempMin((float)Math.random()*60 - 10);
         report.setType(ReportType.ZIP_CODE);
+        report.setDate(new Date(System.currentTimeMillis()));
         report.setData(zip);
         return report;
     }

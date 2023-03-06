@@ -1,5 +1,6 @@
 package tec.bd.weather.storage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,6 +54,7 @@ public class LocalWeatherReportStorage implements WeatherReportStorage {
 
     @Override
     public String createKey(String data, Date date) {
-        return data + "---" + (saveWithDate ? date : "");
+        String dateFormatted = (saveWithDate ? new SimpleDateFormat("dd-mm-YYYY").format(date) : "");
+        return data + "---" + dateFormatted;
     }
 }

@@ -13,8 +13,6 @@ public class Report {
     private Date date;
     private String data;
 
-    public Report() {}
-
     public ReportType getType() {
         return type;
     }
@@ -96,11 +94,13 @@ public class Report {
     @Override
     public String toString() {
         return ">>> type=" + type +
+        ", query_data=" + data +
         ", humidity=" + humidity +
         ", pressure=" + pressure +
         ", temp=" + temperature +
         ", tempMax=" + tempMax +
         ", tempMin=" + tempMin +
+        ", date=" + date +
         "<<<";
     }
 }
