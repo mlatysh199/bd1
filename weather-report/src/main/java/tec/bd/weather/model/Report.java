@@ -1,6 +1,8 @@
 package tec.bd.weather.model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Report {
 
@@ -102,5 +104,18 @@ public class Report {
         ", tempMin=" + tempMin +
         ", date=" + date +
         "<<<";
+    }
+
+    public Map<String, Object> toMap() {
+        var map = new HashMap<String, Object>();
+        map.put("type", type);
+        map.put("data", data);
+        map.put("humidity", humidity);
+        map.put("pressure", pressure);
+        map.put("temperature", temperature);
+        map.put("tempMax", tempMax);
+        map.put("tempMin", tempMin);
+        map.put("date", date);
+        return map;
     }
 }
