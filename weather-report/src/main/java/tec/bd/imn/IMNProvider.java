@@ -14,7 +14,7 @@ public class IMNProvider implements WeatherProvider {
         report.setPressure((float)Math.random()*143 + 870);
         report.setTempMax((float)Math.random()*60 - 10);
         report.setTempMin((float)Math.random()*60 - 10);
-        report.setType(ReportType.CITY);
+        report.setType(ReportType.IMN_CITY);
         report.setData(city);
         report.setDate(new Date(System.currentTimeMillis()));
         return report;
@@ -27,7 +27,7 @@ public class IMNProvider implements WeatherProvider {
         report.setPressure((float)Math.random()*143 + 870);
         report.setTempMax((float)Math.random()*60 - 10);
         report.setTempMin((float)Math.random()*60 - 10);
-        report.setType(ReportType.ZIP_CODE);
+        report.setType(ReportType.IMN_ZIP_CODE);
         report.setDate(new Date(System.currentTimeMillis()));
         report.setData(zip);
         return report;
