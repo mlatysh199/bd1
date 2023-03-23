@@ -11,7 +11,8 @@ import picocli.CommandLine.HelpCommand;
                 HelpCommand.class,
                 IMNCityCommand.class,
                 IMNZipCodeCommand.class,
-                CityCommand.class
+                CityCommand.class,
+                GUICommand.class
         },
         description = "Weather forecasts for cities around the world")
 public class MainCommand implements Runnable {

@@ -3,7 +3,7 @@ package tec.bd.cli;
 import picocli.CommandLine;
 import tec.bd.ApplicationContext;
 
-@CommandLine.Command(name = "zip", description = "Get weather forecast by zip code")
+@CommandLine.Command(name = "-zip", description = "Get weather forecast by zip code")
 public class ZipCodeCommand implements Runnable {
 
     private static ApplicationContext APP_CONTEXT = ApplicationContext.init();

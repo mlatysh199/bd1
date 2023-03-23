@@ -3,7 +3,7 @@ package tec.bd.cli;
 import picocli.CommandLine;
 import tec.bd.ApplicationContext;
 
-@CommandLine.Command(name = "imn-city", description = "Get weather forecast by city from the IMN system")
+@CommandLine.Command(name = "-imn-city", description = "Get weather forecast by city from the IMN system")
 public class IMNCityCommand implements Runnable{
 
     private static ApplicationContext APP_CONTEXT = ApplicationContext.init();
