@@ -6,7 +6,7 @@
 
   <groupId>tec.bd</groupId>
   <artifactId>weather-report</artifactId>
-  <version>tarea-3-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
 
   <name>weather-report</name>
   <!-- FIXME change it to the project's website -->
