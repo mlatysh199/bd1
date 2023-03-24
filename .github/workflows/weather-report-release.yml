@@ -9,7 +9,6 @@ on:
     paths:
       - weather-report/**
       - .github/workflows/weather-report-release.yml 
-  workflow_dispatch:
 
 jobs:
   publish:
@@ -42,4 +41,4 @@ jobs:
           mvn release:perform --file weather-report/pom.xml -s $GITHUB_WORKSPACE/settings.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_USER: mlatysh199
+          # GITHUB_USER: mlatysh199
