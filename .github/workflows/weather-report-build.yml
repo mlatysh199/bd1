@@ -2,6 +2,7 @@ name: Weather-Report build pipeline
 
 # Definición de eventos
 on:
+  workflow_dispatch
   push:
     branches:
       - main
