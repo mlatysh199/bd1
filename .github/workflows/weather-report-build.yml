@@ -2,7 +2,6 @@ name: Weather-Report build pipeline
 
 # Definición de eventos
 on:
-  workflow_dispatch
   push:
     branches:
       - main
@@ -11,7 +10,7 @@ on:
     paths:
       - weather-report/**
       - .github/workflows/weather-report-build.yml 
-
+  workflow_dispatch:
 # Trabajos
 
 jobs:
