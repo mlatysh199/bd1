@@ -40,4 +40,5 @@ jobs:
           mvn -B release:prepare --file weather-report/pom.xml
           mvn release:perform --file weather-report/pom.xml -s $GITHUB_WORKSPACE/settings.xml
         env:
-          GITHUB_TOKEN: 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 #${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: mlatysh199
