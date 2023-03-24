@@ -6,7 +6,7 @@
 
   <groupId>tec.bd</groupId>
   <artifactId>weather-report</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>3-SNAPSHOT</version>
 
   <name>weather-report</name>
   <!-- FIXME change it to the project's website -->
@@ -152,7 +152,7 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>3.0.0-M7</version>
           <configuration>
-            <tagNameFormat>v@{project.version}</tagNameFormat>
+            <tagNameFormat>vtarea@{project.version}</tagNameFormat>
           </configuration>
         </plugin>
       </plugins>
@@ -180,7 +180,6 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
             <finalName>weather-report</finalName>
-            <aggregate>true</aggregate>
             <appendAssemblyId>false</appendAssemblyId>
             <descriptorRefs>
                 <descriptorRef>jar-with-dependencies</descriptorRef>
