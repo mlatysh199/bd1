@@ -10,6 +10,7 @@ on:
     paths:
       - weather-report/**
       - .github/workflows/weather-report-release.yml 
+  workflow_dispatch:
 
 jobs:
   publish:
