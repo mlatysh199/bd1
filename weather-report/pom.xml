@@ -6,6 +6,7 @@
 
   <groupId>tec.bd</groupId>
   <artifactId>weather-report</artifactId>
+  <!-- tiene que ser 1.0.3 y no tarea porque sí -->
   <version>1.0.3-SNAPSHOT</version>
 
   <name>weather-report</name>
