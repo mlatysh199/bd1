@@ -9,8 +9,6 @@ public class GUICommand implements Runnable {
 
     private static ApplicationContext APP_CONTEXT = ApplicationContext.init();
 
-    // por favor, quiero que los actions ya empiecen a servir...
-
     @Override
     public void run() {
         System.out.println("GUI");
