@@ -15,13 +15,13 @@ public class ReviewReturnCommand implements Runnable {
     public void run() {
         if (id.equals("return_all")) {
             for (var review : APP_CONTEXT.reviewService.getAllEntires()) {
-                System.out.println(review.serializeID() + " " + review.advancedSerialize());
+                System.out.println(review.serialize());
             }
         } else {
             int id = Integer.parseInt(this.id);
             try {
                 var review = APP_CONTEXT.reviewService.getEntry(id);
-                System.out.println(review.serializeID() + " " + review.advancedSerialize());
+                System.out.println(review.serialize());
             } catch (IDNotFoundException e) {
                 e.printStackTrace();
             }

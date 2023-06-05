@@ -3,7 +3,7 @@ package tec.bd.proyectos.cli.client;
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
 import tec.bd.proyectos.entities.ClientEntity;
-import tec.bd.proyectos.errors.BadEntityException;
+import tec.bd.proyectos.errors.IDNotFoundException;
 import tec.bd.proyectos.errors.ReadOnlyEntityException;
 
 @CommandLine.Command(name = "cliu", description = "Updates a client")
@@ -29,7 +29,7 @@ public class ClientUpdateCommand implements Runnable {
     public void run() {
         try {
             APP_CONTEXT.clientService.updateEntry(new ClientEntity(id, name, lastname, email, phone_number));
-        } catch (BadEntityException|ReadOnlyEntityException e) {
+        } catch (IDNotFoundException|ReadOnlyEntityException e) {
             e.printStackTrace();
         }
     }

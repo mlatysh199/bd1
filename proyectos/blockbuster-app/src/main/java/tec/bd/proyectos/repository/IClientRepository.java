@@ -1,23 +1,17 @@
 package tec.bd.proyectos.repository;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import com.zaxxer.hikari.HikariDataSource;
 
 import tec.bd.proyectos.entities.ClientEntity;
 
-public class IClientRepository extends Repository<ClientEntity> {
-
-    private static final String FIND_ALL = "{ CALL client_get_all() }";
-    private static final String FIND_BY_ID = "{ CALL client_get( ? ) }";
-    private static final String SAVE = "{ CALL client_insert( ?, ?, ?, ? ) }";
-    private static final String UPDATE = "{ CALL client_update( ?, ?, ?, ?, ? ) }";
-    private static final String DELETE_BY_ID = "{ CALL client_delete( ? ) }";
+public class IClientRepository extends ProcedureRepository<ClientEntity> {
 
     public IClientRepository(HikariDataSource hikariDataSource) {
-        super(hikariDataSource);
+        super(hikariDataSource, new ClientEntity());
     }
 
     @Override
@@ -30,50 +24,23 @@ public class IClientRepository extends Repository<ClientEntity> {
     }
 
     @Override
-    public List<ClientEntity> findAll() throws SQLException {
-        var statement = connect().prepareCall(FIND_ALL);
-        var resultSet = query(statement);
-        statement.close();
-        return resultSet;
-    }
-
-    @Override
-    public ClientEntity findByID(int id) throws SQLException {
-        var statement = connect().prepareCall(FIND_BY_ID);
-        statement.setInt(1, id);
-        var resultSet = query(statement);
-        statement.close();
-        return resultSet.get(0);
-    }
-
-    @Override
-    public void save(ClientEntity entity) throws SQLException {
-        var statement = connect().prepareCall(SAVE);
+    protected CallableStatement makeSaveCallStatement(ClientEntity entity) throws SQLException {
+        var statement = connect().prepareCall(builder.insert(entity));
         statement.setString(1, entity.getName());
         statement.setString(2, entity.getLastname());
         statement.setString(3, entity.getEmail());
         statement.setString(4, entity.getPhoneNumber());
-        update(statement);
-        statement.close();
+        return statement;
     }
 
     @Override
-    public void update(ClientEntity entity) throws SQLException {
-        var statement = connect().prepareCall(UPDATE);
+    protected CallableStatement makeUpdateCallStatement(ClientEntity entity) throws SQLException {
+        var statement = connect().prepareCall(builder.update(entity));
         statement.setInt(1, entity.getID());
         statement.setString(2, entity.getName());
         statement.setString(3, entity.getLastname());
         statement.setString(4, entity.getEmail());
         statement.setString(5, entity.getPhoneNumber());
-        update(statement);
-        statement.close();
-    }
-
-    @Override
-    public void deleteByID(int id) throws SQLException {
-        var statement = connect().prepareCall(DELETE_BY_ID);
-        statement.setInt(1, id);
-        update(statement);
-        statement.close();
+        return statement;
     }
 }

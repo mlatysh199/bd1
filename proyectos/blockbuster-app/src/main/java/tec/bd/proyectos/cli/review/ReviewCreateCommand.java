@@ -12,6 +12,12 @@ import tec.bd.proyectos.errors.ReadOnlyEntityException;
 public class ReviewCreateCommand implements Runnable {
     private static ApplicationContext APP_CONTEXT = ApplicationContext.init();
 
+    @CommandLine.Parameters(paramLabel = "<client_id>", description = "the client id of the new review")
+    private int client_id;
+
+    @CommandLine.Parameters(paramLabel = "<movie_id>", description = "the movie id of the new review")
+    private int movie_id;
+
     @CommandLine.Parameters(paramLabel = "<rating>", description = "the rating of the new review")
     private int rating;
 
@@ -20,12 +26,6 @@ public class ReviewCreateCommand implements Runnable {
 
     @CommandLine.Parameters(paramLabel = "<created_on>", description = "the date the new review was created on")
     private Date created_on;
-
-    @CommandLine.Parameters(paramLabel = "<client_id>", description = "the client id of the new review")
-    private int client_id;
-
-    @CommandLine.Parameters(paramLabel = "<movie_id>", description = "the movie id of the new review")
-    private int movie_id;
 
     @Override
     public void run() {

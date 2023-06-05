@@ -5,7 +5,7 @@ import java.util.Date;
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
 import tec.bd.proyectos.entities.MovieEntity;
-import tec.bd.proyectos.errors.BadEntityException;
+import tec.bd.proyectos.errors.IDNotFoundException;
 import tec.bd.proyectos.errors.ReadOnlyEntityException;
 
 @CommandLine.Command(name = "movu", description = "Updates a movie")
@@ -31,7 +31,7 @@ public class MovieUpdateCommand implements Runnable {
     public void run() {
         try {
             APP_CONTEXT.movieService.updateEntry(new MovieEntity(id, title, release_date, category_id, units_available));
-        } catch (BadEntityException|ReadOnlyEntityException e) {
+        } catch (IDNotFoundException|ReadOnlyEntityException e) {
             e.printStackTrace();
         }
     }

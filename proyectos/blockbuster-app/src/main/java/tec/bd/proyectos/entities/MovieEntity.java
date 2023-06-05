@@ -1,6 +1,7 @@
 package tec.bd.proyectos.entities;
 
 import java.util.Date;
+import java.util.List;
 
 public class MovieEntity extends Entity {
 
@@ -10,10 +11,11 @@ public class MovieEntity extends Entity {
     private int units_available;
 
     public MovieEntity() {
+        super(4, "movie", List.of("title", "release_date", "category_id", "units_available"));
     }
 
     public MovieEntity(int id, String title, Date release_date, int category_id, int units_available) {
-        super(id);
+        super(id, 4, "movie", List.of("title", "release_date", "category_id", "units_available"));
         this.title = title;
         this.release_date = release_date;
         this.category_id = category_id;
@@ -21,6 +23,7 @@ public class MovieEntity extends Entity {
     }
 
     public MovieEntity(String title, Date release_date, int category_id, int units_available) {
+        super(4, "movie", List.of("title", "release_date", "category_id", "units_available"));
         this.title = title;
         this.release_date = release_date;
         this.category_id = category_id;
@@ -60,6 +63,11 @@ public class MovieEntity extends Entity {
     }
 
     @Override
+    public String serialize() {
+        return serializeID() + ", " + advancedSerialize();
+    }
+
+    @Override
     public String basicSerialize() {
         return String.format("'%s', '%s', %d, %d", this.title, DATE_FORMATTER.format(this.release_date), this.category_id, this.units_available);
     }
@@ -67,10 +75,5 @@ public class MovieEntity extends Entity {
     @Override
     public String advancedSerialize() {
         return String.format("title = '%s', release_date = '%s', category_id = %d, units_available = %d", this.title, DATE_FORMATTER.format(this.release_date), this.category_id, this.units_available);
-    }
-
-    @Override
-    public String columnSerialize() {
-        return "title, release_date, category_id, units_available";
     }
 }

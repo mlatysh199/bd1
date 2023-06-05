@@ -3,6 +3,7 @@ package tec.bd.proyectos.repository;
 import com.zaxxer.hikari.HikariDataSource;
 
 import tec.bd.proyectos.entities.Entity;
+import tec.bd.proyectos.repository.builders.GenericBuilder;
 
 import javax.sql.DataSource;
 
@@ -13,9 +14,11 @@ import java.util.List;
 public abstract class Repository<T extends Entity> {
 
     protected DataSource dataSource;
+    protected GenericBuilder builder;
 
-    protected Repository(HikariDataSource hikariDataSource) {
+    protected Repository(HikariDataSource hikariDataSource, GenericBuilder builder) {
         this.dataSource = hikariDataSource;
+        this.builder = builder;
     }
 
     protected Connection connect() throws SQLException {
@@ -25,7 +28,15 @@ public abstract class Repository<T extends Entity> {
     protected ResultSet rawQuery(String sqlQuery) throws SQLException {
         var connection = this.connect();
         Statement stmt = connection.createStatement();
-        return stmt.executeQuery(sqlQuery);
+        ResultSet resultSet;
+        try {
+            resultSet = stmt.executeQuery(sqlQuery);
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            stmt.close();
+        }
+        return resultSet;
     }
 
     protected List<T> query(String sqlQuery) throws SQLException {
@@ -36,6 +47,12 @@ public abstract class Repository<T extends Entity> {
     protected List<T> query(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         return this.resultSetToEntityList(resultSet);
+    }
+
+    protected int valueQuery(PreparedStatement statement) throws SQLException {
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
     }
 
     protected List<T> resultSetToEntityList(ResultSet resultSet) throws SQLException {
@@ -50,7 +67,13 @@ public abstract class Repository<T extends Entity> {
     protected void rawUpdate(String sqlQuery) throws SQLException {
         var connection = this.connect();
         Statement stmt = connection.createStatement();
-        stmt.executeUpdate(sqlQuery);
+        try {
+            stmt.executeUpdate(sqlQuery);
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            stmt.close();
+        }
     }
 
     protected void update(String sqlQuery) throws SQLException {

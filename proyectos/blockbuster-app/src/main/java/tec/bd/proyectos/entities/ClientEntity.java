@@ -1,5 +1,7 @@
 package tec.bd.proyectos.entities;
 
+import java.util.List;
+
 public class ClientEntity extends Entity {
 
     private String name;
@@ -8,10 +10,11 @@ public class ClientEntity extends Entity {
     private String phone_number;
 
     public ClientEntity() {
+        super(4, "client", List.of("name", "lastname", "email", "phone_number"));
     }
  
     public ClientEntity(int id, String name, String lastname, String email, String phone_number) {
-        super(id);
+        super(id, 4, "client", List.of("name", "lastname", "email", "phone_number"));
         this.name = name;
         this.lastname = lastname;
         this.email = email;
@@ -19,6 +22,7 @@ public class ClientEntity extends Entity {
     }
 
     public ClientEntity(String name, String lastname, String email, String phone_number) {
+        super(4, "client", List.of("name", "lastname", "email", "phone_number"));
         this.name = name;
         this.lastname = lastname;
         this.email = email;
@@ -58,6 +62,11 @@ public class ClientEntity extends Entity {
     }
 
     @Override
+    public String serialize() {
+        return serializeID() + ", " + advancedSerialize();
+    }
+
+    @Override
     public String basicSerialize() {
         return String.format("'%s', '%s', '%s', '%s'", this.name, this.lastname, this.email, this.phone_number);
     }
@@ -66,10 +75,4 @@ public class ClientEntity extends Entity {
     public String advancedSerialize() {
         return String.format("name = '%s', lastname = '%s', email = '%s', phone_number = '%s'", this.name, this.lastname, this.email, this.phone_number);
     }
-
-    @Override
-    public String columnSerialize() {
-        return "name, lastname, email, phone_number";
-    }
-
 }

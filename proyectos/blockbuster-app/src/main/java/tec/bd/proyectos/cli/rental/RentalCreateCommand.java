@@ -12,14 +12,14 @@ import tec.bd.proyectos.errors.ReadOnlyEntityException;
 public class RentalCreateCommand implements Runnable {
     private static ApplicationContext APP_CONTEXT = ApplicationContext.init();
 
-    @CommandLine.Parameters(paramLabel = "rental_date>", description = "the rental date of the new rental")
-    private Date rental_date;
-
     @CommandLine.Parameters(paramLabel = "<client_id>", description = "the client id of the new rental")
     private int client_id;
 
     @CommandLine.Parameters(paramLabel = "<movie_id>", description = "the movie id of the new rental")
     private int movie_id;
+
+    @CommandLine.Parameters(paramLabel = "<rental_date>", description = "the rental date of the new rental")
+    private Date rental_date;
 
     @Override
     public void run() {

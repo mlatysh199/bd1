@@ -1,5 +1,7 @@
 package tec.bd.proyectos.repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -7,17 +9,12 @@ import java.util.List;
 import com.zaxxer.hikari.HikariDataSource;
 
 import tec.bd.proyectos.entities.CategoryEntity;
+import tec.bd.proyectos.entities.MovieEntity;
 
-public class ICategoryRepository extends Repository<CategoryEntity> {
-
-    private static final String FIND_ALL = "{ CALL category_get_all() }";
-    private static final String FIND_BY_ID = "{ CALL category_get( ? ) }";
-    private static final String SAVE = "{ CALL category_insert( ?, ? ) }";
-    private static final String UPDATE = "{ CALL category_update( ?, ?, ? ) }";
-    private static final String DELETE_BY_ID = "{ CALL category_delete( ? ) }";
+public class ICategoryRepository extends StatementRepository<CategoryEntity> {
 
     public ICategoryRepository(HikariDataSource hikariDataSource) {
-        super(hikariDataSource);
+        super(hikariDataSource, new CategoryEntity(), List.of(new MovieEntity()));
     }
 
     @Override
@@ -28,46 +25,19 @@ public class ICategoryRepository extends Repository<CategoryEntity> {
     }
 
     @Override
-    public List<CategoryEntity> findAll() throws SQLException {
-        var statement = connect().prepareCall(FIND_ALL);
-        var resultSet = query(statement);
-        statement.close();
-        return resultSet;
-    }
-
-    @Override
-    public CategoryEntity findByID(int id) throws SQLException {
-        var statement = connect().prepareCall(FIND_BY_ID);
-        statement.setInt(1, id);
-        var resultSet = query(statement);
-        statement.close();
-        return resultSet.get(0);
-    }
-
-    @Override
-    public void save(CategoryEntity entity) throws SQLException {
-        var statement = connect().prepareCall(SAVE);
+    protected PreparedStatement makeSaveStatement(CategoryEntity entity, Connection connection) throws SQLException {
+        var statement = connection.prepareStatement(builder.insert(entity));
         statement.setString(1, entity.getName());
         statement.setString(2, entity.getDescription());
-        update(statement);
-        statement.close();
+        return statement;
     }
 
     @Override
-    public void update(CategoryEntity entity) throws SQLException {
-        var statement = connect().prepareCall(UPDATE);
-        statement.setInt(1, entity.getID());
-        statement.setString(2, entity.getName());
-        statement.setString(3, entity.getDescription());
-        update(statement);
-        statement.close();
-    }
-
-    @Override
-    public void deleteByID(int id) throws SQLException {
-        var statement = connect().prepareCall(DELETE_BY_ID);
-        statement.setInt(1, id);
-        update(statement);
-        statement.close();
+    protected PreparedStatement makeUpdateStatement(CategoryEntity entity, Connection connection) throws SQLException {
+        var statement = connection.prepareStatement(builder.update(entity));
+        statement.setString(1, entity.getName());
+        statement.setString(2, entity.getDescription());
+        statement.setInt(3, entity.getID());
+        return statement;
     }
 }

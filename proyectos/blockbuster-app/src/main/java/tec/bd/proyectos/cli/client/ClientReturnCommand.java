@@ -15,13 +15,13 @@ public class ClientReturnCommand implements Runnable {
     public void run() {
         if (id.equals("return_all")) {
             for (var client : APP_CONTEXT.clientService.getAllEntires()) {
-                System.out.println(client.serializeID() + " : " + client.advancedSerialize());
+                System.out.println(client.serialize());
             }
         } else {
             int id = Integer.parseInt(this.id);
             try {
                 var client = APP_CONTEXT.clientService.getEntry(id);
-                System.out.println(client.serializeID() + " : " + client.advancedSerialize());
+                System.out.println(client.serialize());
             } catch (IDNotFoundException e) {
                 e.printStackTrace();
             }

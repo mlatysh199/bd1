@@ -1,6 +1,7 @@
 package tec.bd.proyectos.entities;
 
 import java.util.Date;
+import java.util.List;
 
 public class RentalEntity extends Entity {
 
@@ -9,17 +10,18 @@ public class RentalEntity extends Entity {
     private int movie_id;
 
     public RentalEntity() {
-
+        super(3, "rentals", List.of("rental_date", "client_id", "movie_id"));
     }
 
     public RentalEntity(int id, Date rental_date, int client_id, int movie_id) {
-        super(id);
+        super(id, 3, "rentals", List.of("rental_date", "client_id", "movie_id"));
         this.rental_date = rental_date;
         this.client_id = client_id;
         this.movie_id = movie_id;
     }
 
     public RentalEntity(Date rental_date, int client_id, int movie_id) {
+        super(3, "rentals", List.of("rental_date", "client_id", "movie_id"));
         this.rental_date = rental_date;
         this.client_id = client_id;
         this.movie_id = movie_id;
@@ -50,6 +52,11 @@ public class RentalEntity extends Entity {
     }
 
     @Override
+    public String serialize() {
+        return serializeID() + ", " + advancedSerialize();
+    }
+
+    @Override
     public String basicSerialize() {
         return String.format("'%s', %d, %d", this.rental_date, this.client_id, this.movie_id);
     }
@@ -57,10 +64,5 @@ public class RentalEntity extends Entity {
     @Override
     public String advancedSerialize() {
         return String.format("rental_date = '%s', client_id = %d, movie_id = %d", this.rental_date, this.client_id, this.movie_id);
-    }
-
-    @Override
-    public String columnSerialize() {
-        return "rental_date, client_id, movie_id";
     }
 }

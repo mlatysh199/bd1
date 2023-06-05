@@ -1,6 +1,7 @@
 package tec.bd.proyectos.entities;
 
 import java.util.Date;
+import java.util.List;
 
 public class LogEntity extends Entity {
 
@@ -9,16 +10,18 @@ public class LogEntity extends Entity {
     private String entry_text;
 
     public LogEntity() {
+        super(3, "blockbuster_log", List.of("table_name", "created_on", "entry_text"));
     }
 
     public LogEntity(String table_name, Date created_on, String entry_text) {
+        super(3, "blockbuster_log", List.of("table_name", "created_on", "entry_text"));
         this.table_name = table_name;
         this.created_on = created_on;
         this.entry_text = entry_text;
     }
 
     public LogEntity(int id, String table_name, Date created_on, String entry_text) {
-        super(id);
+        super(id, 3, "blockbuster_log", List.of("table_name", "created_on", "entry_text"));
         this.table_name = table_name;
         this.created_on = created_on;
         this.entry_text = entry_text;
@@ -49,6 +52,11 @@ public class LogEntity extends Entity {
     }
 
     @Override
+    public String serialize() {
+        return serializeID() + ", " + advancedSerialize();
+    }
+
+    @Override
     public String basicSerialize() {
         return String.format("'%s', '%s', '%s'", this.table_name, DATE_FORMATTER.format(this.created_on), this.entry_text);
     }
@@ -57,10 +65,4 @@ public class LogEntity extends Entity {
     public String advancedSerialize() {
         return String.format("table_name = '%s', created_on = '%s', entry_text = '%s'", this.table_name, DATE_FORMATTER.format(this.created_on), this.entry_text);
     }
-
-    @Override
-    public String columnSerialize() {
-        return "table_name, created_on, entry_text";
-    }
-
 }

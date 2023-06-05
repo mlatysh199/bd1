@@ -3,7 +3,7 @@ package tec.bd.proyectos.cli.category;
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
 import tec.bd.proyectos.entities.CategoryEntity;
-import tec.bd.proyectos.errors.BadEntityException;
+import tec.bd.proyectos.errors.IDNotFoundException;
 import tec.bd.proyectos.errors.ReadOnlyEntityException;
 
 @CommandLine.Command(name = "catu", description = "Updates a category")
@@ -23,7 +23,7 @@ public class CategoryUpdateCommand implements Runnable {
     public void run() {
         try {
             APP_CONTEXT.categoryService.updateEntry(new CategoryEntity(id, name, description));
-        } catch (BadEntityException|ReadOnlyEntityException e) {
+        } catch (IDNotFoundException|ReadOnlyEntityException e) {
             e.printStackTrace();
         }
     }

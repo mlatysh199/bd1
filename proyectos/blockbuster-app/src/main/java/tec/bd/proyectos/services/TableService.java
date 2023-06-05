@@ -41,12 +41,12 @@ public class TableService<T extends Entity> {
         }
     }
 
-    public void updateEntry(T entity) throws BadEntityException, ReadOnlyEntityException {
+    public void updateEntry(T entity) throws IDNotFoundException, ReadOnlyEntityException {
         if (isReadOnly) throw new ReadOnlyEntityException();
         try {
             repository.update(entity);
         } catch (SQLException e) {
-            throw new BadEntityException(entity);
+            throw new IDNotFoundException(entity.getID());
         }
     }
 

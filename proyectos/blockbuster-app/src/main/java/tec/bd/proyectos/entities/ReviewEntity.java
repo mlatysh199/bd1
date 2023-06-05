@@ -1,6 +1,7 @@
 package tec.bd.proyectos.entities;
 
 import java.util.Date;
+import java.util.List;
 
 public class ReviewEntity extends Entity {
 
@@ -11,10 +12,11 @@ public class ReviewEntity extends Entity {
     private int movie_id;
 
     public ReviewEntity() {
+        super(5, "review", List.of("rating", "review_text", "created_on", "client_id", "movie_id"));
     }
 
     public ReviewEntity(int id, int rating, String review_text, Date created_on, int client_id, int movie_id) {
-        super(id);
+        super(id, 5, "review", List.of("rating", "review_text", "created_on", "client_id", "movie_id"));
         this.rating = rating;
         this.review_text = review_text;
         this.created_on = created_on;
@@ -23,6 +25,7 @@ public class ReviewEntity extends Entity {
     }
 
     public ReviewEntity(int rating, String review_text, Date created_on, int client_id, int movie_id) {
+        super(5, "review", List.of("rating", "review_text", "created_on", "client_id", "movie_id"));
         this.rating = rating;
         this.review_text = review_text;
         this.created_on = created_on;
@@ -71,6 +74,11 @@ public class ReviewEntity extends Entity {
     }
 
     @Override
+    public String serialize() {
+        return serializeID() + ", " + advancedSerialize();
+    }
+
+    @Override
     public String basicSerialize() {
         return String.format("%d, '%s', '%s', %d, %d", this.rating, this.review_text, DATE_FORMATTER.format(this.created_on), this.client_id, this.movie_id);
     }
@@ -78,10 +86,5 @@ public class ReviewEntity extends Entity {
     @Override
     public String advancedSerialize() {
         return String.format("rating = %d, review_text = '%s', created_on = '%s', client_id = %d, movie_id = %d", this.rating, this.review_text, DATE_FORMATTER.format(this.created_on), this.client_id, this.movie_id);
-    }
-
-    @Override
-    public String columnSerialize() {
-        return "rating, review_text, created_on, client_id, movie_id";
     }
 }

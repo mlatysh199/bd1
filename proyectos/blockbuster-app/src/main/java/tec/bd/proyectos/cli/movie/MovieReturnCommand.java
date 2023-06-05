@@ -15,13 +15,13 @@ public class MovieReturnCommand implements Runnable {
     public void run() {
         if (id.equals("return_all")) {
             for (var movie : APP_CONTEXT.movieService.getAllEntires()) {
-                System.out.println(movie.serializeID() + " : " + movie.advancedSerialize());
+                System.out.println(movie.serialize());
             }
         } else {
             int id = Integer.parseInt(this.id);
             try {
                 var movie = APP_CONTEXT.movieService.getEntry(id);
-                System.out.println(movie.serializeID() + " : " + movie.advancedSerialize());
+                System.out.println(movie.serialize());
             } catch (IDNotFoundException e) {
                 e.printStackTrace();
             }

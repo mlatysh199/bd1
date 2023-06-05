@@ -15,13 +15,13 @@ public class RentalReturnCommand implements Runnable {
     public void run() {
         if (id.equals("return_all")) {
             for (var rental : APP_CONTEXT.rentalService.getAllEntires()) {
-                System.out.println(rental.serializeID() + " : " + rental.advancedSerialize());
+                System.out.println(rental.serialize());
             }
         } else {
             int id = Integer.parseInt(this.id);
             try {
                 var rental = APP_CONTEXT.rentalService.getEntry(id);
-                System.out.println(rental.serializeID() + " : " + rental.advancedSerialize());
+                System.out.println(rental.serialize());
             } catch (IDNotFoundException e) {
                 e.printStackTrace();
             }

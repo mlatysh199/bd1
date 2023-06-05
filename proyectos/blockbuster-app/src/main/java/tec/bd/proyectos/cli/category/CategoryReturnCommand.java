@@ -15,13 +15,13 @@ public class CategoryReturnCommand implements Runnable {
     public void run() {
         if (id.equals("return_all")) {
             for (var category : APP_CONTEXT.categoryService.getAllEntires()) {
-                System.out.println(category.serializeID() + " : " + category.advancedSerialize());
+                System.out.println(category.serialize());
             }
         } else {
             int id = Integer.parseInt(this.id);
             try {
                 var category = APP_CONTEXT.categoryService.getEntry(id);
-                System.out.println(category.serializeID() + " : " + category.advancedSerialize());
+                System.out.println(category.serialize());
             } catch (IDNotFoundException e) {
                 e.printStackTrace();
             }

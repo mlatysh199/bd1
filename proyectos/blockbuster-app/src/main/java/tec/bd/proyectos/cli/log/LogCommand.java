@@ -14,8 +14,8 @@ public class LogCommand implements Runnable {
     @Override
     public void run() {
         var logs = APP_CONTEXT.logService.getAllEntires();
-        for (int i = 0; logs.size() - i > 0 && i < numberOfLogs; i++) {
-            System.out.println(logs.get(logs.size() - i - 1).serializeID() + " : " + logs.get(logs.size() - i - 1).advancedSerialize());
+        for (int i = 0; i < logs.size() && i < numberOfLogs; i++) {
+            System.out.println(logs.get(i).serialize());
         }
     }
 }
