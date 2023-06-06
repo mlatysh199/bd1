@@ -2,6 +2,7 @@ package tec.bd.proyectos.cli.movie;
 
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
+import tec.bd.proyectos.errors.ExceptionReformatter;
 import tec.bd.proyectos.errors.IDNotFoundException;
 
 @CommandLine.Command(name = "movr", description = "Returns a or all movies")
@@ -23,7 +24,7 @@ public class MovieReturnCommand implements Runnable {
                 var movie = APP_CONTEXT.movieService.getEntry(id);
                 System.out.println(movie.serialize());
             } catch (IDNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(new ExceptionReformatter(e).getFormattedMessage());
             }
         }
     }

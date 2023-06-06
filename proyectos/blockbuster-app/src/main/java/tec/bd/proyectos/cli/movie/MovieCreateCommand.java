@@ -6,6 +6,7 @@ import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
 import tec.bd.proyectos.entities.MovieEntity;
 import tec.bd.proyectos.errors.BadEntityException;
+import tec.bd.proyectos.errors.ExceptionReformatter;
 import tec.bd.proyectos.errors.ReadOnlyEntityException;
 
 @CommandLine.Command(name = "movc", description = "Creates a movie")
@@ -29,7 +30,7 @@ public class MovieCreateCommand implements Runnable {
         try {
             APP_CONTEXT.movieService.createEntry(new MovieEntity(title, release_date, category_id, units_available));
         } catch (BadEntityException|ReadOnlyEntityException e) {
-            e.printStackTrace();
+            System.out.println(new ExceptionReformatter(e).getFormattedMessage());
         }
     }
 }

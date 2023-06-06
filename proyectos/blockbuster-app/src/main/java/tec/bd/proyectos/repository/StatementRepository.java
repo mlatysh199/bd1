@@ -69,33 +69,30 @@ public abstract class StatementRepository<T extends Entity> extends Repository<T
 
     @Override
     public void update(T entity) throws SQLException {
-        try (var connection = connect()) {
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            Savepoint savepoint = connection.setSavepoint("update");
+        var connection = connect();
+        connection.setAutoCommit(false);
+        connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+        Savepoint savepoint = connection.setSavepoint("update");
+        try {
+            var statement = makeUpdateStatement(entity, connection);
             try {
-                var statement = makeUpdateStatement(entity, connection);
-                try {
-                    var statement2 = connection.prepareStatement(builder.contains(baseEntity));
-                    statement2.setInt(1, entity.getID());
-                    int amount = valueQuery(statement2);
-                    statement2.close();
-                    if (amount == 0) {
-                        throw new SQLException("Cannot update " + baseEntity.getClass().getSimpleName() + " with id " + entity.getID() + " because it does not exist");
-                    }
-                    update(statement);
-                } catch (SQLException e) {
-                    connection.rollback(savepoint);
-                    throw e;
-                } finally {
-                    statement.close();
+                var statement2 = connection.prepareStatement(builder.contains(baseEntity));
+                statement2.setInt(1, entity.getID());
+                int amount = valueQuery(statement2);
+                statement2.close();
+                if (amount == 0) {
+                    throw new SQLException("Cannot update " + baseEntity.getClass().getSimpleName() + " with id " + entity.getID() + " because it does not exist");
                 }
-                connection.commit();
+                update(statement);
             } catch (SQLException e) {
                 connection.rollback(savepoint);
                 throw e;
+            } finally {
+                statement.close();
             }
+            connection.commit();
         } catch (SQLException e) {
+            connection.rollback(savepoint);
             throw e;
         }
     }  
@@ -104,43 +101,40 @@ public abstract class StatementRepository<T extends Entity> extends Repository<T
 
     @Override
     public void deleteByID(int id) throws SQLException {
-        try (var connection = connect()) {
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            Savepoint savepoint = connection.setSavepoint("deleteByID");
+        var connection = connect();
+        connection.setAutoCommit(false);
+        connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+        Savepoint savepoint = connection.setSavepoint("deleteByID");
+        try {
+            var statement = connection.prepareStatement(builder.delete(baseEntity));
+            statement.setInt(1, id);
             try {
-                var statement = connection.prepareStatement(builder.delete(baseEntity));
-                statement.setInt(1, id);
-                try {
-                    for (var entity : dependets) {
-                        var statement2 = connection.prepareStatement(builder.contains(baseEntity, entity));
-                        statement2.setInt(1, id);
-                        int amount = valueQuery(statement2);
-                        statement2.close();
-                        if (amount > 0) {
-                            throw new SQLException("Cannot delete " + baseEntity.getClass().getSimpleName() + " with id " + id + " because it has " + amount + " " + entity.getClass().getSimpleName() + "s");
-                        }
-                    }
-                    var statement2 = connection.prepareStatement(builder.contains(baseEntity));
+                for (var entity : dependets) {
+                    var statement2 = connection.prepareStatement(builder.contains(baseEntity, entity));
                     statement2.setInt(1, id);
                     int amount = valueQuery(statement2);
                     statement2.close();
-                    if (amount == 0) {
-                        throw new SQLException("Cannot delete " + baseEntity.getClass().getSimpleName() + " with id " + id + " because it does not exist");
+                    if (amount > 0) {
+                        throw new SQLException("Cannot delete " + baseEntity.getClass().getSimpleName() + " with id " + id + " because it has " + amount + " " + entity.getClass().getSimpleName() + "s");
                     }
-                    update(statement);
-                } catch (SQLException e) {
-                    connection.rollback(savepoint);
-                    throw e;
-                } finally {
-                    statement.close();
                 }
-                connection.commit();
+                var statement2 = connection.prepareStatement(builder.contains(baseEntity));
+                statement2.setInt(1, id);
+                int amount = valueQuery(statement2);
+                statement2.close();
+                if (amount == 0) {
+                    throw new SQLException("Cannot delete " + baseEntity.getClass().getSimpleName() + " with id " + id + " because it does not exist");
+                }
+                update(statement);
             } catch (SQLException e) {
                 connection.rollback(savepoint);
                 throw e;
+            } finally {
+                statement.close();
             }
+            connection.commit();
         } catch (SQLException e) {
+            connection.rollback(savepoint);
             throw e;
         }
     }

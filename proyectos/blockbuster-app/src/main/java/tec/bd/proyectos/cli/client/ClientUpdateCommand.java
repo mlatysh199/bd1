@@ -3,6 +3,7 @@ package tec.bd.proyectos.cli.client;
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
 import tec.bd.proyectos.entities.ClientEntity;
+import tec.bd.proyectos.errors.ExceptionReformatter;
 import tec.bd.proyectos.errors.IDNotFoundException;
 import tec.bd.proyectos.errors.ReadOnlyEntityException;
 
@@ -30,7 +31,7 @@ public class ClientUpdateCommand implements Runnable {
         try {
             APP_CONTEXT.clientService.updateEntry(new ClientEntity(id, name, lastname, email, phone_number));
         } catch (IDNotFoundException|ReadOnlyEntityException e) {
-            e.printStackTrace();
+            System.out.println(new ExceptionReformatter(e).getFormattedMessage());
         }
     }
     

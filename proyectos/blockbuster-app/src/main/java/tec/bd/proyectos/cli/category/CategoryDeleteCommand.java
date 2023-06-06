@@ -2,6 +2,7 @@ package tec.bd.proyectos.cli.category;
 
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
+import tec.bd.proyectos.errors.ExceptionReformatter;
 import tec.bd.proyectos.errors.IDNotFoundException;
 import tec.bd.proyectos.errors.ReadOnlyEntityException;
 
@@ -18,7 +19,7 @@ public class CategoryDeleteCommand implements Runnable {
         try {
             APP_CONTEXT.categoryService.dropEntry(id);
         } catch (IDNotFoundException|ReadOnlyEntityException e) {
-            e.printStackTrace();
+            System.out.println(new ExceptionReformatter(e).getFormattedMessage());
         }
     }
     

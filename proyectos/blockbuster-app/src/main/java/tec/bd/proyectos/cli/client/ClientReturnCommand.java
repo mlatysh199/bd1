@@ -2,6 +2,7 @@ package tec.bd.proyectos.cli.client;
 
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
+import tec.bd.proyectos.errors.ExceptionReformatter;
 import tec.bd.proyectos.errors.IDNotFoundException;
 
 @CommandLine.Command(name = "clir", description = "Returns a or all clients")
@@ -23,7 +24,7 @@ public class ClientReturnCommand implements Runnable {
                 var client = APP_CONTEXT.clientService.getEntry(id);
                 System.out.println(client.serialize());
             } catch (IDNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(new ExceptionReformatter(e).getFormattedMessage());
             }
         }
     }

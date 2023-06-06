@@ -2,6 +2,7 @@ package tec.bd.proyectos.cli.rental;
 
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
+import tec.bd.proyectos.errors.ExceptionReformatter;
 import tec.bd.proyectos.errors.IDNotFoundException;
 import tec.bd.proyectos.errors.ReadOnlyEntityException;
 
@@ -18,7 +19,7 @@ public class RentalDeleteCommand implements Runnable {
         try {
             APP_CONTEXT.rentalService.dropEntry(id);
         } catch (IDNotFoundException|ReadOnlyEntityException e) {
-            e.printStackTrace();
+            System.out.println(new ExceptionReformatter(e).getFormattedMessage());
         }
     }
     

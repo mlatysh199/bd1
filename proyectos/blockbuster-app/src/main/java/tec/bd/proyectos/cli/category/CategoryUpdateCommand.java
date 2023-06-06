@@ -3,6 +3,7 @@ package tec.bd.proyectos.cli.category;
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
 import tec.bd.proyectos.entities.CategoryEntity;
+import tec.bd.proyectos.errors.ExceptionReformatter;
 import tec.bd.proyectos.errors.IDNotFoundException;
 import tec.bd.proyectos.errors.ReadOnlyEntityException;
 
@@ -16,7 +17,7 @@ public class CategoryUpdateCommand implements Runnable {
     @CommandLine.Parameters(paramLabel = "<name>", description = "the new name of the category to update")
     private String name;
 
-    @CommandLine.Parameters(paramLabel = "<description>", description = "the new description of the category to update")
+    @CommandLine.Parameters(paramLabel = "<description>", description = "the new description of the category to update", defaultValue = "")
     private String description;
 
     @Override
@@ -24,7 +25,7 @@ public class CategoryUpdateCommand implements Runnable {
         try {
             APP_CONTEXT.categoryService.updateEntry(new CategoryEntity(id, name, description));
         } catch (IDNotFoundException|ReadOnlyEntityException e) {
-            e.printStackTrace();
+            System.out.println(new ExceptionReformatter(e).getFormattedMessage());
         }
     }
     

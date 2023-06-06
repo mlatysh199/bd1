@@ -2,6 +2,7 @@ package tec.bd.proyectos.cli.category;
 
 import picocli.CommandLine;
 import tec.bd.proyectos.ApplicationContext;
+import tec.bd.proyectos.errors.ExceptionReformatter;
 import tec.bd.proyectos.errors.IDNotFoundException;
 
 @CommandLine.Command(name = "catr", description = "Returns a or all categories")
@@ -23,7 +24,7 @@ public class CategoryReturnCommand implements Runnable {
                 var category = APP_CONTEXT.categoryService.getEntry(id);
                 System.out.println(category.serialize());
             } catch (IDNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(new ExceptionReformatter(e).getFormattedMessage());
             }
         }
     }
