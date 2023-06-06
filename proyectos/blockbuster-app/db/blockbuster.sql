@@ -32,7 +32,7 @@ CREATE TABLE `blockbuster_log` (
   `created_on` datetime NOT NULL,
   `entry_text` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `blockbuster_log` (
 
 LOCK TABLES `blockbuster_log` WRITE;
 /*!40000 ALTER TABLE `blockbuster_log` DISABLE KEYS */;
+INSERT INTO `blockbuster_log` VALUES (1,'reviews','2023-06-05 18:39:53','New review for movie 6 by client 2'),(2,'reviews','2023-06-05 18:41:45','New review for movie 6 by client 2'),(3,'reviews','2023-06-05 18:44:07','Review 3 updated'),(4,'reviews','2023-06-05 18:46:08','Review 4 was deleted'),(5,'rentals','2023-06-05 18:48:22','New rental for client 2 and movie 6'),(6,'rentals','2023-06-05 18:49:43','New rental for client 2 and movie 6'),(7,'rentals','2023-06-05 18:51:12','Rental 4 was deleted'),(8,'rentals','2023-06-05 18:52:09','Update on rental 3'),(9,'rentals','2023-06-05 18:52:35','Rental 3 was deleted'),(10,'reviews','2023-06-05 18:52:47','Review 3 was deleted'),(11,'rentals','2023-06-06 17:02:59','New rental for client 3 and movie 6'),(12,'rentals','2023-06-06 17:05:34','New rental for client 6 and movie 7'),(13,'reviews','2023-06-06 17:07:11','New review for movie 6 by client 3'),(14,'reviews','2023-06-06 17:08:01','New review for movie 7 by client 6'),(15,'reviews','2023-06-06 17:08:39','Review 6 updated');
 /*!40000 ALTER TABLE `blockbuster_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +57,7 @@ CREATE TABLE `category` (
   `name` varchar(45) NOT NULL,
   `description` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,6 +66,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (3,'Fiction',''),(4,'Drama','Cómo le roban el sandwich a uno');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +86,7 @@ CREATE TABLE `client` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `lastname_idx` (`lastname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +95,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
+INSERT INTO `client` VALUES (3,'Ivan','Ivánovitch','amante.pelis@gmail.com','98878776'),(6,'Ivan','Selezniov','odiador.pelis@gmail.com','64733387');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +117,7 @@ CREATE TABLE `movie` (
   KEY `movie_category_fk` (`category_id`),
   KEY `movie_title_idx` (`title`),
   CONSTRAINT `movie_category_fk` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,6 +126,7 @@ CREATE TABLE `movie` (
 
 LOCK TABLES `movie` WRITE;
 /*!40000 ALTER TABLE `movie` DISABLE KEYS */;
+INSERT INTO `movie` VALUES (6,'Matrix2','1998-01-02 00:00:00',3,15),(7,'Peli de sandwiches','2023-06-10 00:00:00',4,5345);
 /*!40000 ALTER TABLE `movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +147,7 @@ CREATE TABLE `rentals` (
   KEY `rental_movie_fk` (`movie_id`),
   CONSTRAINT `rental_client_fk` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),
   CONSTRAINT `rental_movie_fk` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +156,7 @@ CREATE TABLE `rentals` (
 
 LOCK TABLES `rentals` WRITE;
 /*!40000 ALTER TABLE `rentals` DISABLE KEYS */;
+INSERT INTO `rentals` VALUES (5,'2023-06-06 00:00:00',3,6),(6,'2023-06-05 00:00:00',6,7);
 /*!40000 ALTER TABLE `rentals` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -219,7 +224,7 @@ CREATE TABLE `review` (
   KEY `review_movie_fk` (`movie_id`),
   CONSTRAINT `review_client_fk` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),
   CONSTRAINT `review_movie_fk` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,6 +233,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
+INSERT INTO `review` VALUES (5,10,'Matrix dos es la mejor película que he visto','2023-06-06 00:00:00',3,6),(6,3,'No dieron suficiente expresión artística a los sandwiches','2023-06-06 00:00:00',6,7);
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -670,7 +676,7 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-05 16:10:35
+-- Dump completed on 2023-06-06 17:10:19
 
 DROP USER IF EXISTS 'blockbusterappuser'@'localhost';
 CREATE USER IF NOT EXISTS 'blockbusterappuser'@'localhost' IDENTIFIED BY 'blockbusterapppass';
